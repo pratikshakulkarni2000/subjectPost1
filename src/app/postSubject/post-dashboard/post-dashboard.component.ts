@@ -14,6 +14,9 @@ export class PostDashboardComponent implements OnInit {
   constructor(
     private _postService : PostsService
   ) { }
+  trackById(index : number,d : Iposts){
+    return d.id
+  }
 
   ngOnInit(): void {
     this.fetchData()
@@ -41,22 +44,18 @@ export class PostDashboardComponent implements OnInit {
   }
 
   deletePost(){
-    this._postService.removePostObs$.subscribe(res => {
-      let getIndex = this.posts.findIndex(r => r.id === res)
+    this._postService.removePostObs$.subscribe(id => {
+      let getIndex = this.posts.findIndex(r => r.id === id)
       this.posts.splice(getIndex,1)
 
     })
   }
 
   updatePost(){
-    this._postService.updatePostObs$.subscribe({
-      next : data => {
-        let getIndex = this.posts.findIndex(u => u.id === data.id)
-        this.posts[getIndex] = data
-      },
-      error : err => {
-        console.log(err)
-      }
+    this._postService.updatePostObs$.subscribe(res => {
+      let getIndex = this.posts.findIndex(u => u.id === res.id)
+        this.posts[getIndex] = res
+     
     })
   }
 

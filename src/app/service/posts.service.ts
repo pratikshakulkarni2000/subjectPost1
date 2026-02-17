@@ -55,7 +55,7 @@ export class PostsService {
     )
   }
 
-  createPost(post : any) : Observable<IpostRes>{
+  createPost(post : Iposts) : Observable<IpostRes>{
     this._snackBar.opensnackbar(`Post added successfully!!!`)
       return this._httpClient.post<any>(this.POST_URL,post)
   }
@@ -69,6 +69,8 @@ export class PostsService {
 
   updatePosts(up : Iposts) : Observable<Iposts>{
     let UPDATE_URL = `${this.BASE_URL}/cards/${up.id}.json`
+    console.log(UPDATE_URL);
+    
 
     this._snackBar.opensnackbar(`This post is updated successfully !!!`)
 

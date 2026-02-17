@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
         Auth : 'Token From LS'
       }
     })
-    return next.handle(request).pipe(
+    return next.handle(modifyreq).pipe(
       finalize(() => {
         this._spinnerService.setSpinner(false)
       })

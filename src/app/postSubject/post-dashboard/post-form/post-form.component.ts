@@ -53,7 +53,7 @@ editId !: string
               console.log(data);
               this.postForm.reset()
 
-              this._postService.setNewPost(obj)
+              this._postService.setNewPost({...obj,id: data.name})
             },
             error : err => {
               console.log(err)
@@ -66,6 +66,8 @@ editId !: string
     patchData(){
       this._postService.editPostObs$.subscribe(res => {
         if(res){
+          console.log(res);
+          
           this.postForm.patchValue(res)
           this.isInEditMode = true
           this.editId = res.id
@@ -76,19 +78,19 @@ editId !: string
 
     onUpdate(){
       if(this.postForm.valid){
-        let obj : Iposts = {
+        let UP_obj : Iposts = {
           ...this.postForm.value,
           id : this.editId
         }
-        console.log(obj);
+        console.log(UP_obj);
         
-        this._postService.updatePosts(obj).subscribe({
+        this._postService.updatePosts(UP_obj).subscribe({
           next : data => {
             console.log(data);
             
             this.postForm.reset()
             this.isInEditMode = false
-            this._postService.setPost(data)
+            this._postService.setPost(UP_obj)
           }
         })
       }
